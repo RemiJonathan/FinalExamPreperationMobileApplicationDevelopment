@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.remijonathan.finalexampreperationmobileapplicationdevelopment">
 
+    <!--
+    You need to add this permission for user security.
+    Whenever you download an app from play store,
+    it asks for permission that application will use.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
 
         android:allowBackup="true"
