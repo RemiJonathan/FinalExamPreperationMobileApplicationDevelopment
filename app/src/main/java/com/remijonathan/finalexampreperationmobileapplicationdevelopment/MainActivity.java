@@ -1,9 +1,11 @@
 package com.remijonathan.finalexampreperationmobileapplicationdevelopment;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -18,8 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase database;
+    private HolidayAdapter adapter;
     private RequestQueue queue;
     private RecyclerView recyclerView;
 
@@ -36,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         jsonParse();
 
         recyclerView = findViewById(R.id.recycler_view_holiday_items);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //adapter = new HolidayAdapter(this, ));
+        recyclerView.setAdapter(adapter);
     }
 
     private void jsonParse() {
@@ -62,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        for(int i = 0; i<response.length(); i++){
+                        for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject holiday = response.getJSONObject(i);
 
@@ -86,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Remember to add the request to the queue you created
         queue.add(request);
+
     }
 
     private void addHoliday(String name, String date) {
@@ -94,5 +103,17 @@ public class MainActivity extends AppCompatActivity {
         contentValues.put(ProjectContract.HolidaysEntry.COLUMN_DATE, date);
 
         database.insert(ProjectContract.HolidaysEntry.TABLE_NAME, null, contentValues);
+    }
+
+    private Cursor getAllItems() {
+        return database.query(
+                ProjectContract.HolidaysEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ProjectContract.HolidaysEntry.COLUMN_DATE + " ASC"
+        );
     }
 }
