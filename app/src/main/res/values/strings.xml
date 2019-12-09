@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FinalExamPreperationMobileApplicationDevelopment</string>
+    <string name="example_holiday_name">Example Holiday Name</string>
+    <string name="_01_01_2019">01/01/2019</string>
 </resources>
